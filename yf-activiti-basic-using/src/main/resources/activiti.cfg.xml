@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/yf-activiti-basic-using"/>
+        <property name="username" value="root"/>
+        <property name="password" value="litemall123456"/>
+    </bean>
+
+    <!--<bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">-->
+    <!-- 自定义流程引擎配置 -->
+    <bean id="processEngineConfiguration" class="cn.jho.activiti.basic.core.CustomProcessEngineConfiguration">
+        <!-- 配置默认流程引擎名称 -->
+        <!--<property name="processEngineName" value=""/>-->
+        <!--代表数据源-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--代表是否生成表结构-->
+        <property name="databaseSchemaUpdate" value="true"/>
+    </bean>
+
+    <bean id="jho" class="cn.jho.activiti.basic.ch1.People">
+        <property name="name" value="jho"/>
+        <property name="age" value="18"/>
+    </bean>
+
+</beans>
