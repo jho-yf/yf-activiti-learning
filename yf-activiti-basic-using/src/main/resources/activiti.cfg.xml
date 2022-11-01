@@ -10,15 +10,22 @@
         <property name="password" value="litemall123456"/>
     </bean>
 
+    <bean id="customProcessEngineLifecycleListener"
+            class="cn.jho.activiti.basic.core.CustomProcessEngineLifecycleListener"/>
+
     <!--<bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">-->
     <!-- 自定义流程引擎配置 -->
     <bean id="processEngineConfiguration" class="cn.jho.activiti.basic.core.CustomProcessEngineConfiguration">
         <!-- 配置默认流程引擎名称 -->
         <!--<property name="processEngineName" value=""/>-->
-        <!--代表数据源-->
+        <!-- 代表数据源 -->
         <property name="dataSource" ref="dataSource"/>
-        <!--代表是否生成表结构-->
+        <!-- 代表是否生成表结构 -->
         <property name="databaseSchemaUpdate" value="true"/>
+        <!-- 自定义流程引擎监听器 -->
+        <property name="processEngineLifecycleListener" ref="customProcessEngineLifecycleListener"/>
+        <!-- 声明数据库类型 -->
+        <property name="databaseType" value="mysql"/>
     </bean>
 
     <bean id="jho" class="cn.jho.activiti.basic.ch1.People">
