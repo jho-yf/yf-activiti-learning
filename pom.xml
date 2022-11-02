@@ -14,6 +14,8 @@
         <java.version>1.8</java.version>
         <junit.version>5.9.1</junit.version>
         <druid.version>1.2.13</druid.version>
+        <mysql.version>5.1.49</mysql.version>
+        <h2.version>1.4.200</h2.version>
     </properties>
 
     <modules>
@@ -27,6 +29,18 @@
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

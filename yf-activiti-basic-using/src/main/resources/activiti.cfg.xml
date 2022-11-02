@@ -26,6 +26,11 @@
         <property name="processEngineLifecycleListener" ref="customProcessEngineLifecycleListener"/>
         <!-- 声明数据库类型 -->
         <property name="databaseType" value="mysql"/>
+        <property name="configurators">
+            <list>
+                <bean class="cn.jho.activiti.basic.core.CustomProcessEngineConfigurator"/>
+            </list>
+        </property>
     </bean>
 
     <bean id="jho" class="cn.jho.activiti.basic.ch1.People">
