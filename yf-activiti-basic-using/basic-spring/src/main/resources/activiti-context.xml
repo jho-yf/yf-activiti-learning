@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/yf-activiti-basic-using"/>
+        <property name="username" value="root"/>
+        <property name="password" value="litemall123456"/>
+    </bean>
+
+    <!-- Spring事务管理器 -->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+        <!-- 代表数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 代表是否生成表结构 -->
+        <property name="databaseSchemaUpdate" value="true"/>
+        <!-- 声明数据库类型 -->
+        <property name="databaseType" value="mysql"/>
+        <!--  使用Spring事务管理器  -->
+        <property name="transactionManager" ref="dataSourceTransactionManager"/>
+    </bean>
+
+    <!-- activiti流程引擎 -->
+    <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+        <!-- 关联processEngineConfiguration -->
+        <property name="processEngineConfiguration" ref="processEngineConfiguration"/>
+    </bean>
+
+    <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"/>
+
+</beans>
