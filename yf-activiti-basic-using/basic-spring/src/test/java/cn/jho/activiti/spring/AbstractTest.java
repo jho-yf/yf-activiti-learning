@@ -11,6 +11,6 @@ import org.slf4j.LoggerFactory;
  */
 abstract class AbstractTest extends Assertions {
 
-    Logger LOGGER = LoggerFactory.getLogger(AbstractTest.class);
+    Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 }
