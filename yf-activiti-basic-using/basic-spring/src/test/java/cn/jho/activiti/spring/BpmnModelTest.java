@@ -10,15 +10,11 @@ import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.Process;
 import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.bpmn.model.UserTask;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngines;
-import org.activiti.engine.RepositoryService;
 import org.activiti.engine.impl.util.io.InputStreamSource;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DiagramElement;
 import org.activiti.engine.repository.DiagramLayout;
 import org.activiti.engine.repository.ProcessDefinition;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -27,16 +23,6 @@ import org.junit.jupiter.api.Test;
  * @author JHO xu-jihong@qq.com
  */
 class BpmnModelTest extends AbstractTest {
-
-    ProcessEngine engine;
-
-    RepositoryService repositoryService;
-
-    @BeforeEach
-    void init() {
-        engine = ProcessEngines.getDefaultProcessEngine();
-        repositoryService = engine.getRepositoryService();
-    }
 
     @Test
     void testBpmnXMLConverter() {
@@ -71,7 +57,8 @@ class BpmnModelTest extends AbstractTest {
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinition.getId());
 
         assertNotNull(bpmnModel);
-        LOGGER.info("bpmn model: {}", bpmnModel);
+        byte[] bytes = new BpmnXMLConverter().convertToXML(bpmnModel, StandardCharsets.UTF_8.name());
+        LOGGER.info("bpmn model: {}", new String(bytes, StandardCharsets.UTF_8));
     }
 
 

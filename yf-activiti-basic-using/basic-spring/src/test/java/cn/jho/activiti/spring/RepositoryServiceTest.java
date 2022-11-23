@@ -3,13 +3,9 @@ package cn.jho.activiti.spring;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipInputStream;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngines;
-import org.activiti.engine.RepositoryService;
 import org.activiti.engine.impl.util.IoUtil;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -18,16 +14,6 @@ import org.junit.jupiter.api.Test;
  * @author JHO xu-jihong@qq.com
  */
 class RepositoryServiceTest extends AbstractTest {
-
-    ProcessEngine engine;
-
-    RepositoryService repositoryService;
-
-    @BeforeEach
-    void init() {
-        engine = ProcessEngines.getDefaultProcessEngine();
-        repositoryService = engine.getRepositoryService();
-    }
 
     @Test
     void testCreateDeployment() {

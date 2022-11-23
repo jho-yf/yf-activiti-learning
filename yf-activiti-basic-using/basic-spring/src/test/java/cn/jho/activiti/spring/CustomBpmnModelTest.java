@@ -14,15 +14,11 @@ import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.bpmn.model.StartEvent;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.ActivitiException;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngines;
-import org.activiti.engine.RepositoryService;
 import org.activiti.validation.ProcessValidator;
 import org.activiti.validation.ProcessValidatorFactory;
 import org.activiti.validation.ValidationError;
 import org.activiti.validation.validator.ValidatorSet;
 import org.activiti.validation.validator.ValidatorSetNames;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -31,16 +27,6 @@ import org.junit.jupiter.api.Test;
  * @author JHO xu-jihong@qq.com
  */
 class CustomBpmnModelTest extends AbstractTest {
-
-    ProcessEngine engine;
-
-    RepositoryService repositoryService;
-
-    @BeforeEach
-    void init() {
-        engine = ProcessEngines.getDefaultProcessEngine();
-        repositoryService = engine.getRepositoryService();
-    }
 
     @Test
     void genBpmnModelAndValidate() {
