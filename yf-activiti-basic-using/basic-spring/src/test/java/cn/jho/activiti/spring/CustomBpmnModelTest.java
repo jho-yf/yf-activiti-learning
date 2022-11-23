@@ -1,6 +1,9 @@
 package cn.jho.activiti.spring;
 
+import cn.jho.activiti.CustomUserTaskValidator;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.EndEvent;
@@ -10,10 +13,15 @@ import org.activiti.bpmn.model.Process;
 import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.bpmn.model.StartEvent;
 import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.ActivitiException;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
-import org.activiti.engine.repository.Deployment;
+import org.activiti.validation.ProcessValidator;
+import org.activiti.validation.ProcessValidatorFactory;
+import org.activiti.validation.ValidationError;
+import org.activiti.validation.validator.ValidatorSet;
+import org.activiti.validation.validator.ValidatorSetNames;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +43,41 @@ class CustomBpmnModelTest extends AbstractTest {
     }
 
     @Test
-    void genBpmnModel() {
+    void genBpmnModelAndValidate() {
+        BpmnModel model = genBpmn();
+        byte[] xml = new BpmnXMLConverter().convertToXML(model, StandardCharsets.UTF_8.name());
+        assertNotNull(xml);
+        LOGGER.info("xml:{}", new String(xml, StandardCharsets.UTF_8));
+
+        ProcessValidatorFactory validatorFactory = new ProcessValidatorFactory();
+        ProcessValidator validator = validatorFactory.createDefaultProcessValidator();
+        List<ValidationError> errors = validator.validate(model);
+        assertEquals(0, errors.size());
+    }
+
+    @Test
+    void customValidator() {
+        ProcessValidatorFactory validatorFactory = new ProcessValidatorFactory();
+        ProcessValidator validator = validatorFactory.createDefaultProcessValidator();
+        ValidatorSet validatorSet = new ValidatorSet(ValidatorSetNames.ACTIVITI_EXECUTABLE_PROCESS);
+        validatorSet.addValidator(new CustomUserTaskValidator());
+        validator.getValidatorSets().add(validatorSet);
+
+        List<ValidationError> errors = validator.validate(genBpmn());
+        assertNotNull(errors);
+        LOGGER.info("errors={}", errors);
+    }
+
+    @Test
+    void genBpmnModelAndDeploy() {
+        BpmnModel bpmnModel = genBpmn();
+        String resource = "test.bpmn20.xml";
+        assertThrowsExactly(ActivitiException.class,
+                () -> repositoryService.createDeployment().addBpmnModel(resource, bpmnModel).deploy());
+
+    }
+
+    private BpmnModel genBpmn() {
         Process process = new Process();
         process.setId("myProcess");
         process.setName("myProcessName");
@@ -60,23 +102,21 @@ class CustomBpmnModelTest extends AbstractTest {
 
         process.addFlowElement(genSequenceFlow("seqFlow1", "seqFlow1", startEvent, apply, null));
         process.addFlowElement(genSequenceFlow("seqFlow2", "seqFlow2", apply, exclusiveGateway, null));
-        process.addFlowElement(
-                genSequenceFlow("seqFlow3", "小于等于3天", exclusiveGateway, departApproval, "${ day <= 3 }"));
-        process.addFlowElement(
-                genSequenceFlow("seqFlow4", "大于3天", exclusiveGateway, managerApproval, "${ day > 3 }"));
+
+        SequenceFlow sequenceFlowForDepart = genSequenceFlow("seqFlow3", "小于等于3天", exclusiveGateway, departApproval,
+                "${ day <= 3 }");
+        SequenceFlow sequenceFlowForManager = genSequenceFlow("seqFlow4", "大于3天", exclusiveGateway, managerApproval,
+                "${ day > 3 }");
+        process.addFlowElement(sequenceFlowForDepart);
+        process.addFlowElement(sequenceFlowForManager);
+        exclusiveGateway.setOutgoingFlows(Arrays.asList(sequenceFlowForDepart, sequenceFlowForManager));
+
         process.addFlowElement(genSequenceFlow("seqFlow5", "seqFlow5", departApproval, end, null));
         process.addFlowElement(genSequenceFlow("seqFlow6", "seqFlow6", managerApproval, end, null));
 
         BpmnModel model = new BpmnModel();
         model.addProcess(process);
-        byte[] xml = new BpmnXMLConverter().convertToXML(model, StandardCharsets.UTF_8.name());
-        assertNotNull(xml);
-        LOGGER.info("xml:{}", new String(xml, StandardCharsets.UTF_8));
-
-        String resource = "custom.bpmn20.xml";
-        Deployment deployment = repositoryService.createDeployment().addBpmnModel(resource, model).deploy();
-        assertNotNull(deployment);
-        LOGGER.info("deployment:{}", deployment);
+        return model;
     }
 
     private UserTask genUserTask(String id, String name) {
