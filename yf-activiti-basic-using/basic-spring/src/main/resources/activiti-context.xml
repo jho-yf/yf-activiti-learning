@@ -4,8 +4,12 @@
         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/yf-activiti-basic-using"/>
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
+        <!--<property name="url" value="jdbc:mysql://localhost:3306/yf-activiti-basic-using"/>-->
+        <!--<property name="username" value="root"/>-->
+        <!--<property name="password" value="litemall123456"/>-->
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:activiti-db"/>
         <property name="username" value="root"/>
         <property name="password" value="litemall123456"/>
     </bean>
@@ -22,9 +26,9 @@
         <!-- 代表数据源 -->
         <property name="dataSource" ref="dataSource"/>
         <!-- 代表是否生成表结构 -->
-        <property name="databaseSchemaUpdate" value="true"/>
+        <property name="databaseSchemaUpdate" value="create-drop"/>
         <!-- 声明数据库类型 -->
-        <property name="databaseType" value="mysql"/>
+        <property name="databaseType" value="h2"/>
         <!--  使用Spring事务管理器  -->
         <property name="transactionManager" ref="dataSourceTransactionManager"/>
         <property name="processValidator">
