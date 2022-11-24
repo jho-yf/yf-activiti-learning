@@ -43,11 +43,12 @@ class ProDefTest extends AbstractTest {
     @Test
     void queryOrderByVersion() {
         List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionKey("TrivialSubProcess")
                 .orderByProcessDefinitionVersion()
                 .asc()
                 .list();
 
-        assertSame(3, list.size());
+        assertTrue(list.size() >= 3);
 
         for (int i = 0; i < list.size() - 1; i++) {
             assertTrue(list.get(i).getVersion() < list.get(i + 1).getVersion());
