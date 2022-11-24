@@ -17,6 +17,7 @@
         <activiti-engine.version>6.0.0</activiti-engine.version>
         <slf4j-api.version>1.7.36</slf4j-api.version>
         <logback-classic.version>1.0.13</logback-classic.version>
+        <java-uuid-generator.version>4.0.1</java-uuid-generator.version>
     </properties>
 
     <modules>
@@ -42,7 +43,7 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j-api.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>

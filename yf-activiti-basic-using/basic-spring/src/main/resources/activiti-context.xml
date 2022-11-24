@@ -31,8 +31,13 @@
         <property name="databaseType" value="h2"/>
         <!--  使用Spring事务管理器  -->
         <property name="transactionManager" ref="dataSourceTransactionManager"/>
+        <!-- Bpmn校验器 -->
         <property name="processValidator">
             <bean factory-bean="processValidatorFactory" factory-method="createDefaultProcessValidator"/>
+        </property>
+        <property name="idGenerator">
+            <!--<bean class="org.activiti.engine.impl.persistence.StrongUuidGenerator"/>-->
+            <bean class="cn.jho.activiti.CustomIdGenerator"/>
         </property>
     </bean>
 

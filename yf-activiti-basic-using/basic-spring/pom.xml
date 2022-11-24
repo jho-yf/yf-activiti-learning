@@ -18,6 +18,11 @@
             <artifactId>activiti-spring</artifactId>
             <version>${activiti-engine.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.uuid</groupId>
+            <artifactId>java-uuid-generator</artifactId>
+            <version>${java-uuid-generator.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
