@@ -2,6 +2,7 @@ package cn.jho.activiti.spring;
 
 import java.util.List;
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
@@ -28,6 +29,7 @@ abstract class AbstractTest extends Assertions {
     protected RuntimeService runtimeService;
     protected TaskService taskService;
     protected HistoryService historyService;
+    protected IdentityService identityService;
 
     @BeforeEach
     void init() {
@@ -36,6 +38,7 @@ abstract class AbstractTest extends Assertions {
         runtimeService = engine.getRuntimeService();
         taskService = engine.getTaskService();
         historyService = engine.getHistoryService();
+        identityService = engine.getIdentityService();
     }
 
     @AfterEach
