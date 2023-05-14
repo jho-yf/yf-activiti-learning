@@ -8,9 +8,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-# todo 动态配置文件
-#    volumes:
-#      - ./activiti-app.properties:/usr/local/tomcat/webapps/activiti-app/WEB-INF/classes/META-INF/activiti-app/activiti-app.properties
-#      - ./activiti-admin.properties:/usr/local/tomcat/webapps/activiti-admin/WEB-INF/classes/META-INF/activiti-admin/activiti-admin.properties
-#      - ./db.properties:/usr/local/tomcat/webapps/activiti-rest/WEB-INF/classes/db.properties
-#      - ./engine.properties:/usr/local/tomcat/webapps/activiti-rest/WEB-INF/classes/engine.properties
+    volumes:
+      - "./properties/activiti-app.properties:/properties/activiti-app.properties"
+      - "./properties/activiti-admin.properties:/properties/activiti-admin.properties"
+      - "./properties/db.properties:/properties/db.properties"
+      - "./properties/engine.properties:/properties/engine.properties"
