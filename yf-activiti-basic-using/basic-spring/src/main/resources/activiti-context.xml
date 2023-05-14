@@ -39,6 +39,8 @@
             <!--<bean class="org.activiti.engine.impl.persistence.StrongUuidGenerator"/>-->
             <bean class="cn.jho.activiti.CustomIdGenerator"/>
         </property>
+        <!-- 开启异步执行器 -->
+        <property name="asyncExecutorActivate" value="true"/>
     </bean>
 
     <!-- activiti流程引擎 -->

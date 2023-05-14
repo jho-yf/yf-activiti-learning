@@ -1,14 +1,13 @@
 package cn.jho.activiti.spring;
 
-import java.util.List;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
+import org.activiti.engine.ManagementService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.repository.Deployment;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +29,7 @@ abstract class AbstractTest extends Assertions {
     protected TaskService taskService;
     protected HistoryService historyService;
     protected IdentityService identityService;
+    protected ManagementService managementService;
 
     @BeforeEach
     void init() {
@@ -39,14 +39,19 @@ abstract class AbstractTest extends Assertions {
         taskService = engine.getTaskService();
         historyService = engine.getHistoryService();
         identityService = engine.getIdentityService();
+        managementService = engine.getManagementService();
     }
 
     @AfterEach
     void destroy() {
-        List<Deployment> list = repositoryService.createDeploymentQuery().list();
-        for (Deployment deployment : list) {
-            repositoryService.deleteDeployment(deployment.getId(), true);
-        }
+        managementService.createTimerJobQuery().list().forEach(job -> managementService.deleteTimerJob(job.getId()));
+        managementService.createJobQuery().list().forEach(job -> managementService.deleteJob(job.getId()));
+        managementService.createDeadLetterJobQuery().list()
+                .forEach(job -> managementService.deleteDeadLetterJob(job.getId()));
+
+        repositoryService.createDeploymentQuery()
+                .list()
+                .forEach(deployment -> repositoryService.deleteDeployment(deployment.getId(), true));
     }
 
 }
