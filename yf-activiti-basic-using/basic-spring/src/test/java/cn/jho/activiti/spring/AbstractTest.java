@@ -52,6 +52,9 @@ abstract class AbstractTest extends Assertions {
         repositoryService.createDeploymentQuery()
                 .list()
                 .forEach(deployment -> repositoryService.deleteDeployment(deployment.getId(), true));
+        historyService.createHistoricProcessInstanceQuery()
+                .list()
+                .forEach(processInstance -> historyService.deleteHistoricProcessInstance(processInstance.getId()));
     }
 
 }

@@ -1,8 +1,10 @@
 package cn.jho.activiti.spring;
 
+import cn.jho.activiti.cmd.DeleteHistoricProcessInstanceCmd;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -19,6 +21,8 @@ class RuntimeServiceTest extends AbstractTest {
 
     Deployment deployment;
 
+    ProcessDefinition processDefinition;
+
     @BeforeEach
     void initProcess() {
         String resource = "custom-bpmn-model.bpmn20.xml";
@@ -29,13 +33,12 @@ class RuntimeServiceTest extends AbstractTest {
                 .key("custom-bpmn-key")
                 .addClasspathResource(resource)
                 .deploy();
+        processDefinition = repositoryService.createProcessDefinitionQuery()
+                .deploymentId(deployment.getId()).singleResult();
     }
 
     @Test
     void testStartProcessInstance() {
-        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                .deploymentId(deployment.getId()).singleResult();
-
         // 启动流程实例
         Map<String, Object> variables = new HashMap<>();
         variables.put("day", 1);
@@ -68,5 +71,59 @@ class RuntimeServiceTest extends AbstractTest {
                 .processInstanceId(processInstance.getId())
                 .singleResult());
     }
+
+    @Test
+    void testDeleteProcessInstance() {
+        // 启动流程实例
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("day", 1);
+        ProcessInstance processInstance =
+                runtimeService.startProcessInstanceByKey(processDefinition.getKey(), variables);
+
+        String deleteReason = "no reason";
+        runtimeService.deleteProcessInstance(processInstance.getId(), deleteReason);
+        assertNull(runtimeService.createProcessInstanceQuery()
+                .processInstanceId(processInstance.getId())
+                .singleResult());
+
+        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceId(processInstance.getId())
+                .singleResult();
+        assertNotNull(historicProcessInstance);
+        assertNotNull(historicProcessInstance.getEndTime());
+        assertEquals(deleteReason, historicProcessInstance.getDeleteReason());
+    }
+
+    @Test
+    void testDeleteProcessInstanceCascade() {
+        // 启动流程实例
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("day", 1);
+        ProcessInstance processInstance =
+                runtimeService.startProcessInstanceByKey(processDefinition.getKey(), variables);
+
+        // 执行自定义命令
+        managementService.executeCommand(
+                new DeleteHistoricProcessInstanceCmd(processInstance.getId(), "no reason", false));
+
+        assertNull(runtimeService.createProcessInstanceQuery()
+                .processInstanceId(processInstance.getId())
+                .singleResult());
+    }
+
+    @Test
+    void testGetActiveActivitiIds() {
+        // 启动流程实例
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("day", 1);
+        ProcessInstance processInstance =
+                runtimeService.startProcessInstanceByKey(processDefinition.getKey(), variables);
+
+        List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getId());
+        assertNotNull(activeActivityIds);
+        assertEquals(1, activeActivityIds.size());
+        assertEquals("sid-abff028b-e798-48f8-a93a-ae8deb55bc73", activeActivityIds.get(0));
+    }
+
 
 }
