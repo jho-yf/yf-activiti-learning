@@ -55,6 +55,9 @@ abstract class AbstractTest extends Assertions {
         historyService.createHistoricProcessInstanceQuery()
                 .list()
                 .forEach(processInstance -> historyService.deleteHistoricProcessInstance(processInstance.getId()));
+        historyService.createHistoricTaskInstanceQuery()
+                .list()
+                .forEach(task -> historyService.deleteHistoricTaskInstance(task.getId()));
     }
 
 }
