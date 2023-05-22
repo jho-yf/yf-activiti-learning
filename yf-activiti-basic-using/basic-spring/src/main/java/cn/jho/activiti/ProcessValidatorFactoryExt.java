@@ -7,6 +7,12 @@ import org.activiti.validation.validator.ValidatorSetNames;
 
 /**
  * ProcessValidatorFactoryExt
+ * <p>
+ * 开启自定义校验器
+ * <bean id="processValidatorFactory" class="cn.jho.activiti.ProcessValidatorFactoryExt"/>
+ * <property name="processValidator">
+ * <bean factory-bean="processValidatorFactory" factory-method="createDefaultProcessValidator"/>
+ * </property>
  *
  * @author JHO xu-jihong@qq.com
  */

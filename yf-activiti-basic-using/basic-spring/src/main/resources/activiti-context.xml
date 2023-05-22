@@ -20,7 +20,7 @@
     </bean>
 
     <!-- 自定义processValidatorFactory扩展 -->
-    <bean id="processValidatorFactory" class="cn.jho.activiti.ProcessValidatorFactoryExt"/>
+    <!-- <bean id="processValidatorFactory" class="cn.jho.activiti.ProcessValidatorFactoryExt"/> -->
 
     <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
         <!-- 代表数据源 -->
@@ -32,9 +32,9 @@
         <!--  使用Spring事务管理器  -->
         <property name="transactionManager" ref="dataSourceTransactionManager"/>
         <!-- Bpmn校验器 -->
-        <property name="processValidator">
-            <bean factory-bean="processValidatorFactory" factory-method="createDefaultProcessValidator"/>
-        </property>
+        <!-- <property name="processValidator"> -->
+        <!--    <bean factory-bean="processValidatorFactory" factory-method="createDefaultProcessValidator"/> -->
+        <!-- </property> -->
         <property name="idGenerator">
             <!--<bean class="org.activiti.engine.impl.persistence.StrongUuidGenerator"/>-->
             <bean class="cn.jho.activiti.CustomIdGenerator"/>
