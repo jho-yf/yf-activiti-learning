@@ -1,5 +1,6 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.engine;
 
+import cn.jho.activiti.spring.AbstractTest;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;

@@ -1,5 +1,13 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.model;
 
+import cn.jho.activiti.spring.AbstractTest;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.repository.Deployment;
@@ -8,14 +16,6 @@ import org.activiti.image.ProcessDiagramGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.FileCopyUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * DiagramTest

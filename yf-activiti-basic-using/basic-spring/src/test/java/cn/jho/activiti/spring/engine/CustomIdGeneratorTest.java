@@ -1,6 +1,7 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.engine;
 
 import cn.jho.activiti.CustomIdGenerator;
+import cn.jho.activiti.spring.AbstractTest;
 import java.util.List;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.junit.jupiter.api.BeforeEach;

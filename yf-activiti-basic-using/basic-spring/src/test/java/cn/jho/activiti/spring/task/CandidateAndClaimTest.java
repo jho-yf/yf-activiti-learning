@@ -1,5 +1,6 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.task;
 
+import cn.jho.activiti.spring.AbstractTest;
 import java.util.List;
 import org.activiti.engine.history.HistoricIdentityLink;
 import org.activiti.engine.impl.persistence.entity.GroupEntityImpl;

@@ -1,6 +1,7 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.model;
 
 import cn.jho.activiti.CustomUserTaskValidator;
+import cn.jho.activiti.spring.AbstractTest;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;

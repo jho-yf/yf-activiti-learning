@@ -1,5 +1,6 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.job;
 
+import cn.jho.activiti.spring.AbstractTest;
 import java.util.Date;
 import java.util.List;
 import org.activiti.engine.repository.Deployment;

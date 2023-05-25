@@ -1,5 +1,9 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.task;
 
+import cn.jho.activiti.spring.AbstractTest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
@@ -7,28 +11,24 @@ import org.activiti.engine.task.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static cn.jho.activiti.listener.SetAssigneeListener.CUSTOM_ASSIGNEE;
-
 /**
- * <p>TaskListenerTest</p>
+ * <p>TaskServiceTest</p>
  *
  * @author JHO xu-jihong@qq.com
  */
-class TaskListenerTest extends AbstractTest {
+class TaskServiceTest extends AbstractTest {
 
     Deployment deployment;
     ProcessDefinition processDefinition;
 
     @BeforeEach
     void initProcess() {
-        String resource = "task-listener-demo.bpmn20.xml";
+        String resource = "task-service-demo.bpmn20.xml";
 
         deployment = repositoryService.createDeployment()
-                .name("task-listener-demo")
-                .category("task-listener-demo")
-                .key("task-listener-demo")
+                .name("task-service-demo")
+                .category("task-service-demo")
+                .key("task-service-demo")
                 .addClasspathResource(resource)
                 .deploy();
         processDefinition = repositoryService.createProcessDefinitionQuery()
@@ -36,10 +36,12 @@ class TaskListenerTest extends AbstractTest {
     }
 
     @Test
-    void test() {
-        runtimeService.startProcessInstanceById(processDefinition.getId());
+    void testFindByAssigneeAndComplete() {
+        String assignee = "张三";
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("username", assignee);
+        runtimeService.startProcessInstanceById(processDefinition.getId(), variables);
 
-        String assignee = CUSTOM_ASSIGNEE;
         List<Task> tasks = taskService.createTaskQuery().taskAssignee(assignee).list();
         assertEquals(1, tasks.size());
         HistoricTaskInstance historicTask = historyService.createHistoricTaskInstanceQuery()

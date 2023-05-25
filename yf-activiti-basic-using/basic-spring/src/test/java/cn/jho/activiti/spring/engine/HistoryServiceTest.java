@@ -1,5 +1,6 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.engine;
 
+import cn.jho.activiti.spring.AbstractTest;
 import java.util.HashMap;
 import java.util.Map;
 import org.activiti.engine.history.HistoricProcessInstance;

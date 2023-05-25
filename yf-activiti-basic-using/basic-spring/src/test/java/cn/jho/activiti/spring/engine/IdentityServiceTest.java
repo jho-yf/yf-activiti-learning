@@ -1,5 +1,8 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.engine;
 
+import cn.jho.activiti.spring.AbstractTest;
+import java.util.HashMap;
+import java.util.Map;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.repository.Deployment;
@@ -7,9 +10,6 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>IdentityServiceTest</p>

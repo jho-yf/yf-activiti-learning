@@ -1,5 +1,6 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.engine;
 
+import cn.jho.activiti.spring.AbstractTest;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipInputStream;

@@ -1,6 +1,7 @@
-package cn.jho.activiti.spring;
+package cn.jho.activiti.spring.engine;
 
 import cn.jho.activiti.cmd.DeleteHistoricProcessInstanceCmd;
+import cn.jho.activiti.spring.AbstractTest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

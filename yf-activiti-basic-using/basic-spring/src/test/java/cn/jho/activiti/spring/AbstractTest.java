@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author JHO xu-jihong@qq.com
  */
-abstract class AbstractTest extends Assertions {
+public abstract class AbstractTest extends Assertions {
 
-    Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    protected Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     protected ProcessEngine engine;
     protected RepositoryService repositoryService;
