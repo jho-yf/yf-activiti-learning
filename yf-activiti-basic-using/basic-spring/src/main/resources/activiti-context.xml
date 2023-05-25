@@ -41,6 +41,9 @@
         </property>
         <!-- 开启异步执行器 -->
         <property name="asyncExecutorActivate" value="true"/>
+        <property name="customPreVariableTypes">
+            <bean class="cn.jho.activiti.variable.JsonType"/>
+        </property>
     </bean>
 
     <!-- activiti流程引擎 -->
