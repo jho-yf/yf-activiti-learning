@@ -32,16 +32,6 @@ class TaskServiceTest extends AbstractTest {
                 .deploy();
         processDefinition = repositoryService.createProcessDefinitionQuery()
                 .deploymentId(deployment.getId()).singleResult();
-
-        resource = "task-listener-demo.bpmn20.xml";
-        deployment = repositoryService.createDeployment()
-                .name("task-listener-demo")
-                .category("task-listener-demo")
-                .key("task-listener-demo")
-                .addClasspathResource(resource)
-                .deploy();
-        processDefinition = repositoryService.createProcessDefinitionQuery()
-                .deploymentId(deployment.getId()).singleResult();
     }
 
     @Test

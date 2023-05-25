@@ -58,6 +58,8 @@ abstract class AbstractTest extends Assertions {
         historyService.createHistoricTaskInstanceQuery()
                 .list()
                 .forEach(task -> historyService.deleteHistoricTaskInstance(task.getId()));
+        identityService.createUserQuery().list().forEach(user -> identityService.deleteUser(user.getId()));
+        identityService.createGroupQuery().list().forEach(group -> identityService.deleteGroup(group.getId()));
     }
 
 }

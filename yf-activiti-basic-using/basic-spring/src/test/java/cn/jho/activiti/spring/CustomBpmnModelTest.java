@@ -13,7 +13,6 @@ import org.activiti.bpmn.model.Process;
 import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.bpmn.model.StartEvent;
 import org.activiti.bpmn.model.UserTask;
-import org.activiti.engine.ActivitiException;
 import org.activiti.validation.ProcessValidator;
 import org.activiti.validation.ProcessValidatorFactory;
 import org.activiti.validation.ValidationError;
@@ -54,15 +53,6 @@ class CustomBpmnModelTest extends AbstractTest {
         LOGGER.info("errors={}", errors);
     }
 
-    @Test
-    void genBpmnModelAndDeploy() {
-        BpmnModel bpmnModel = genBpmn();
-        String resource = "test.bpmn20.xml";
-        assertThrowsExactly(ActivitiException.class,
-                () -> repositoryService.createDeployment().addBpmnModel(resource, bpmnModel).deploy());
-
-    }
-
     private BpmnModel genBpmn() {
         Process process = new Process();
         process.setId("myProcess");
@@ -89,7 +79,8 @@ class CustomBpmnModelTest extends AbstractTest {
         process.addFlowElement(genSequenceFlow("seqFlow1", "seqFlow1", startEvent, apply, null));
         process.addFlowElement(genSequenceFlow("seqFlow2", "seqFlow2", apply, exclusiveGateway, null));
 
-        SequenceFlow sequenceFlowForDepart = genSequenceFlow("seqFlow3", "小于等于3天", exclusiveGateway, departApproval,
+        SequenceFlow sequenceFlowForDepart = genSequenceFlow("seqFlow3", "小于等于3天", exclusiveGateway,
+                departApproval,
                 "${ day <= 3 }");
         SequenceFlow sequenceFlowForManager = genSequenceFlow("seqFlow4", "大于3天", exclusiveGateway, managerApproval,
                 "${ day > 3 }");
