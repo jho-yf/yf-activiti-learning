@@ -2,8 +2,11 @@ package cn.jho.activiti.spring.engine;
 
 import cn.jho.activiti.spring.AbstractTest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -55,6 +58,16 @@ class HistoryServiceTest extends AbstractTest {
                 .processInstanceId(processInstance.getId()).singleResult();
         assertNotNull(historicProcessInstance);
         assertNotNull(historicProcessInstance.getEndTime());
+
+        List<HistoricTaskInstance> historicTaskInstances = historyService.createHistoricTaskInstanceQuery()
+                .processInstanceId(processInstance.getId())
+                .list();
+        assertNotNull(historicTaskInstances);
+
+        List<HistoricActivityInstance> historicActivityInstances = historyService.createHistoricActivityInstanceQuery()
+                .processInstanceId(processInstance.getId())
+                .list();
+        assertNotNull(historicActivityInstances);
     }
 
 }
