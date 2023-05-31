@@ -1,5 +1,6 @@
 package cn.jho.activiti.spring;
 
+import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.ManagementService;
@@ -30,6 +31,7 @@ public abstract class AbstractTest extends Assertions {
     protected HistoryService historyService;
     protected IdentityService identityService;
     protected ManagementService managementService;
+    protected FormService formService;
 
     @BeforeEach
     void init() {
@@ -40,6 +42,7 @@ public abstract class AbstractTest extends Assertions {
         historyService = engine.getHistoryService();
         identityService = engine.getIdentityService();
         managementService = engine.getManagementService();
+        formService = engine.getFormService();
     }
 
     @AfterEach
