@@ -5,16 +5,17 @@
         typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
         targetNamespace="http://www.activiti.org/processdef">
     <process id="form-demo" name="form-demo" isExecutable="true">
-        <startEvent id="sid-d8bfd134-9f78-4236-8b48-095681e1e171"/>
-        <userTask id="sid-5170d507-24b9-4b76-b026-ca1f0852e63f" name="【提交申请】">
+        <startEvent id="sid-d8bfd134-9f78-4236-8b48-095681e1e171">
             <extensionElements>
+                <activiti:formProperty id="business_id" name="业务id" type="string" readable="false"/>
                 <activiti:formProperty id="startDate" name="请假开始时间" type="date" datePattern="yyyy-MM-dd"
                         required="true"/>
                 <activiti:formProperty id="endDate" name="请假结束时间" type="date" datePattern="yyyy-MM-dd"
                         required="true"/>
                 <activiti:formProperty id="reason" name="请假原因" type="string" required="true"/>
             </extensionElements>
-        </userTask>
+        </startEvent>
+        <userTask id="sid-5170d507-24b9-4b76-b026-ca1f0852e63f" name="【提交申请】"/>
         <sequenceFlow id="sid-095c9ab1-08ab-46cf-b7e7-d2c04e633265" sourceRef="sid-d8bfd134-9f78-4236-8b48-095681e1e171"
                 targetRef="sid-5170d507-24b9-4b76-b026-ca1f0852e63f"/>
         <userTask id="sid-6c62043a-c73f-4cc5-8e96-2a5be3db3f5b" name="【经理审批】">

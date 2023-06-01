@@ -33,10 +33,29 @@ class FormServiceTest extends AbstractTest {
                 .singleResult();
     }
 
+    /*
+    <startEvent id="sid-d8bfd134-9f78-4236-8b48-095681e1e171">
+        <extensionElements>
+            <activiti:formProperty id="business_id" name="业务id" type="string" readable="false"/>
+            <activiti:formProperty id="startDate" name="请假开始时间" type="date" datePattern="yyyy-MM-dd" required="true"/>
+            <activiti:formProperty id="endDate" name="请假结束时间" type="date" datePattern="yyyy-MM-dd" required="true"/>
+            <activiti:formProperty id="reason" name="请假原因" type="string" required="true"/>
+        </extensionElements>
+    </startEvent>
+     */
     @Test
-    void testGetForm() {
+    void testGetStartForm() {
         StartFormData startFormData = formService.getStartFormData(processDefinition.getId());
         assertNotNull(startFormData);
+        assertSame(3, startFormData.getFormProperties().size());
+        startFormData.getFormProperties().forEach(props -> {
+            LOGGER.info("##############################");
+            LOGGER.info("id={}", props.getId());
+            LOGGER.info("name={}", props.getName());
+            LOGGER.info("typeName={}", props.getType().getName());
+            LOGGER.info("type={}", props.getType().getInformation("datePattern"));
+            LOGGER.info("value={}", props.getValue());
+        });
     }
 
 }
