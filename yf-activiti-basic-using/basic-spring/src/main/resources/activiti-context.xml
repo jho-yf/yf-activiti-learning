@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
@@ -43,6 +43,11 @@
         <property name="asyncExecutorActivate" value="true"/>
         <property name="customPreVariableTypes">
             <bean class="cn.jho.activiti.variable.JsonType"/>
+        </property>
+        <property name="customFormEngines">
+            <list>
+                <bean class="cn.jho.activiti.form.CustomFormEngine"/>
+            </list>
         </property>
     </bean>
 

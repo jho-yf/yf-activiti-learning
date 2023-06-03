@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static cn.jho.activiti.form.CustomFormEngine.MINE_FORM_ENGINE_NAME;
+
 /**
  * 外置表单
  *
@@ -102,6 +104,20 @@ class FormKeyTest extends AbstractTest {
         Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
         Object renderedTaskForm = formService.getRenderedTaskForm(task.getId());
         file = ResourceUtils.getFile("classpath:form/approveForm.html");
+        assertNotEquals(new String(Files.readAllBytes(file.toPath())), renderedTaskForm);
+    }
+
+    @Test
+    void testCustomFormEngine() throws IOException {
+        Map<String, Object> vars = new HashMap<>();
+        vars.put("startDate", new Date());
+        vars.put("endDate", new Date());
+        vars.put("reason", "no reason");
+        ProcessInstance processInstance = runtimeService
+                .startProcessInstanceById(processDefinition.getId(), vars);
+        Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+        Object renderedTaskForm = formService.getRenderedTaskForm(task.getId(), MINE_FORM_ENGINE_NAME);
+        File file = ResourceUtils.getFile("classpath:form/approveForm.html");
         assertNotEquals(new String(Files.readAllBytes(file.toPath())), renderedTaskForm);
     }
 
