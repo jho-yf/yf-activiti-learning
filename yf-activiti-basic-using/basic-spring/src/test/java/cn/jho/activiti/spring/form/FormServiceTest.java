@@ -67,10 +67,7 @@ class FormServiceTest extends AbstractTest {
     }
 
     @Test
-    void testGetRenderedForm() {
-        Object renderedStartForm = formService.getRenderedStartForm(processDefinition.getId(), null);
-        assertNull(renderedStartForm);
-
+    void testSubmitStartFormData() {
         Map<String, String> properties = new HashMap<>();
         properties.put("startDate", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         properties.put("endDate", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -105,11 +102,13 @@ class FormServiceTest extends AbstractTest {
 
         Map<String, String> properties = new HashMap<>();
         properties.put("approve", "3");
+
+        // 保存表单数据
         formService.saveFormData(task.getId(), properties);
         Map<String, Object> variables = runtimeService.getVariables(processInstance.getId());
         assertSame("3", variables.get("approve"));
 
-        // save and complete
+        // 保存表单数据并完成任务
         formService.submitTaskFormData(task.getId(), properties);
     }
 
