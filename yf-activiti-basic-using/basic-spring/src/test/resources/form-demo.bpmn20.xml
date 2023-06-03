@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-        xmlns:activiti="http://activiti.org/bpmn"
-        xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-        typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
-        targetNamespace="http://www.activiti.org/processdef">
+             xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/processdef">
     <process id="form-demo" name="form-demo" isExecutable="true">
         <startEvent id="sid-d8bfd134-9f78-4236-8b48-095681e1e171">
             <extensionElements>
                 <activiti:formProperty id="business_id" name="业务id" type="string" readable="false"/>
                 <activiti:formProperty id="startDate" name="请假开始时间" type="date" datePattern="yyyy-MM-dd"
-                        required="true"/>
+                                       required="true"/>
                 <activiti:formProperty id="endDate" name="请假结束时间" type="date" datePattern="yyyy-MM-dd"
-                        required="true"/>
-                <activiti:formProperty id="reason" name="请假原因" type="string" required="true"/>
+                                       required="true"/>
+                <activiti:formProperty id="reason" name="请假原因" type="string" required="false" value="请假~"/>
             </extensionElements>
         </startEvent>
         <userTask id="sid-5170d507-24b9-4b76-b026-ca1f0852e63f" name="【提交申请】"/>
         <sequenceFlow id="sid-095c9ab1-08ab-46cf-b7e7-d2c04e633265" sourceRef="sid-d8bfd134-9f78-4236-8b48-095681e1e171"
-                targetRef="sid-5170d507-24b9-4b76-b026-ca1f0852e63f"/>
+                      targetRef="sid-5170d507-24b9-4b76-b026-ca1f0852e63f"/>
         <userTask id="sid-6c62043a-c73f-4cc5-8e96-2a5be3db3f5b" name="【经理审批】">
             <extensionElements>
                 <activiti:formProperty id="startDate" name="请假开始时间" type="date" datePattern="yyyy-MM-dd"
-                        writable="false"/>
+                                       writable="false"/>
                 <activiti:formProperty id="endDate" name="请假结束时间" type="date" datePattern="yyyy-MM-dd"
-                        writable="false"/>
+                                       writable="false"/>
                 <activiti:formProperty id="reason" name="请假原因" type="string" writable="false"/>
                 <activiti:formProperty id="approve" name="审批意见" type="enum" required="true">
                     <activiti:value id="1" name="同意"/>
@@ -33,45 +33,45 @@
             </extensionElements>
         </userTask>
         <sequenceFlow id="sid-232f2403-d921-47d1-87f5-4d5becfad393" sourceRef="sid-5170d507-24b9-4b76-b026-ca1f0852e63f"
-                targetRef="sid-6c62043a-c73f-4cc5-8e96-2a5be3db3f5b"/>
+                      targetRef="sid-6c62043a-c73f-4cc5-8e96-2a5be3db3f5b"/>
         <endEvent id="sid-42503453-9c86-47a4-ba28-3b7ddabc5070"/>
         <sequenceFlow id="sid-4e0f3332-4351-4e28-8cff-e2d2647fe053" sourceRef="sid-6c62043a-c73f-4cc5-8e96-2a5be3db3f5b"
-                targetRef="sid-42503453-9c86-47a4-ba28-3b7ddabc5070"/>
+                      targetRef="sid-42503453-9c86-47a4-ba28-3b7ddabc5070"/>
     </process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_form-demo">
         <bpmndi:BPMNPlane bpmnElement="form-demo" id="BPMNPlane_form-demo">
             <bpmndi:BPMNShape id="shape-79a44a83-f19f-4cea-86c6-d49fd5222791"
-                    bpmnElement="sid-d8bfd134-9f78-4236-8b48-095681e1e171">
+                              bpmnElement="sid-d8bfd134-9f78-4236-8b48-095681e1e171">
                 <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="-155.0" y="-40.0" width="30.0"
-                        height="30.0"/>
+                              height="30.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape id="shape-282dde37-2666-40ab-89d3-aba04caea693"
-                    bpmnElement="sid-5170d507-24b9-4b76-b026-ca1f0852e63f">
+                              bpmnElement="sid-5170d507-24b9-4b76-b026-ca1f0852e63f">
                 <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="-100.0" y="-65.0" width="100.0"
-                        height="80.0"/>
+                              height="80.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge id="edge-731478d5-d192-4b8c-a90e-89a1036bad35"
-                    bpmnElement="sid-095c9ab1-08ab-46cf-b7e7-d2c04e633265">
+                             bpmnElement="sid-095c9ab1-08ab-46cf-b7e7-d2c04e633265">
                 <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-125.0" y="-25.0"/>
                 <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-100.0" y="-25.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNShape id="shape-1fb4f009-5183-42c2-95b9-2cf3573693ba"
-                    bpmnElement="sid-6c62043a-c73f-4cc5-8e96-2a5be3db3f5b">
+                              bpmnElement="sid-6c62043a-c73f-4cc5-8e96-2a5be3db3f5b">
                 <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="30.0" y="-65.0" width="100.0"
-                        height="80.0"/>
+                              height="80.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge id="edge-f712b435-4db1-4d99-80d7-f729a34e0392"
-                    bpmnElement="sid-232f2403-d921-47d1-87f5-4d5becfad393">
+                             bpmnElement="sid-232f2403-d921-47d1-87f5-4d5becfad393">
                 <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="0.0" y="-25.0"/>
                 <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="30.0" y="-25.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNShape id="shape-ee2ad092-4b80-4ca9-bfbc-67f5070901a3"
-                    bpmnElement="sid-42503453-9c86-47a4-ba28-3b7ddabc5070">
+                              bpmnElement="sid-42503453-9c86-47a4-ba28-3b7ddabc5070">
                 <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="65.0" y="60.0" width="30.0"
-                        height="30.0"/>
+                              height="30.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge id="edge-34392f64-169d-4c8f-b329-2351176d5523"
-                    bpmnElement="sid-4e0f3332-4351-4e28-8cff-e2d2647fe053">
+                             bpmnElement="sid-4e0f3332-4351-4e28-8cff-e2d2647fe053">
                 <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="80.0" y="15.0"/>
                 <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="80.0" y="60.0"/>
             </bpmndi:BPMNEdge>
